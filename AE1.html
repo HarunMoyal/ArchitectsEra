@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Architectera – Header + Static Navbar</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:sans-serif; padding-top:60px; }
+
+    /* Floating Header – always fixed */
+    .floating-header {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  background: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  border-bottom: solid;
+}
+
+.floating-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-top: 1px solid #ddd;
+  border-bottom: 3px solid #bbb;
+}
+
+ .floating-header.scrolled {
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+
+
+
+    /* Navbar – regular flow (not fixed) */
+    .navbar {
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-top: 60px; /* below floating header */
+    }
+    .navbar {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 1px;
+  position: relative;
+}
+
+.navbar .logo img {
+  height: 60px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  background: #fff;
+  padding: 10px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  box-shadow: none;
+}
+
+.nav-links a:hover::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: #000;
+}
+
+.nav-links a.active {
+  background: #eee;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+    /* info & whatsapp CTA */
+    .left-info {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .left-info span {
+      margin-right: 20px;
+      color: gray;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .copy-icon { cursor: pointer; margin-left: 5px; }
+    .slide {
+      animation: slide-text 8s linear infinite;
+    }
+    @keyframes slide-text {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-1 * var(--slide-width))); }
+    }
+    .right-action {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .free-badge {
+      background: yellow;
+      color: black;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 15px;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+    .whatsapp-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+    }
+    .whatsapp-link img {
+      width: 20px; height: 20px; margin-right: 6px;
+    }
+    .glow-pulse {
+      display: inline-block;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% {
+        text-shadow: 0 0 5px rgba(255,204,0,0.6),
+                    0 0 10px rgba(255,204,0,0.4);
+      }
+      50% {
+        text-shadow: 0 0 15px rgba(255,204,0,1),
+                    0 0 30px rgba(255,204,0,0.7);
+      }
+    }
+
+    /* Media query for screens smaller than 750px */
+   @media (max-width: 450px) {
+  .floating-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .right-action {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .glow-pulse {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .free-badge {
+    font-size: 14px;
+    padding: 5px 12px;
+  }
+
+  .whatsapp-link {
+    font-size: 14px;
+  }
+
+  .whatsapp-link img {
+    width: 22px;
+    height: 22px;
+    margin-right: 6px;
+  }
+}
+
+    @media (max-width: 450px) {
+  .left-info {
+    display: none;
+  }
+}
+.arrow-icon {
+  display: none;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+@media (max-width: 450px) {
+  .arrow-icon {
+    display: inline;
+  }
+}
+@media (max-width: 450px) {
+  .floating-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .right-action {
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 450px) {
+  .floating-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .right-action {
+    justify-content: center;
+    margin-top: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .free-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    margin-right: 5px;
+  }
+
+  .whatsapp-link {
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .whatsapp-link img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+
+  .glow-pulse {
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  .arrow-icon {
+    display: inline;
+    margin-left: 4px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: lightgray;
+    padding: 10px;
+    z-index: 999;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+    width: 250px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    background: lightgrey;
+    text-decoration: underline;
+    box-shadow: none;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
+.hero-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.hero-img img {
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.fade-in-left img {
+  animation: fadeInLeft 1.2s ease-out forwards;
+}
+
+.fade-in-right img {
+  animation: fadeInRight 1.2s ease-out forwards;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.hero-section {
+  position: relative;
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9f9f9;
+}
+
+.hero-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.hero-images img {
+  width: 45%;
+  max-width: 400px;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: imgFadeIn 1s ease-out forwards;
+}
+.hero-images img:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+@keyframes imgFadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text .heading-main {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+.hero-text .heading-sub {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+.hero-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  background: #134cb3;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out 1s forwards;
+}
+
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-full {
+  position: relative;
+  height: 100vh;
+  background: #f5f5f5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 60px;
+}
+
+.hero-content {
+  z-index: 2;
+  position: relative;
+  max-width: 800px;
+  margin-bottom: 40px;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  animation: fadeInUp 1s ease-out 0.4s forwards;
+  opacity: 0;
+}
+.cta-btn {
+  padding: 12px 24px;
+  background-color: #134cb3;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 5px;
+  animation: fadeInUp 1s ease-out 0.7s forwards;
+  opacity: 0;
+}
+
+.highlight {
+  color: #134cb3;
+}
+
+.hero-images-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  padding: 0 30px;
+  z-index: 1;
+}
+
+.hero-img {
+  width: 40%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+}
+
+.left-slide {
+  animation: slideLeft 1.2s ease-out forwards;
+}
+.right-slide {
+  animation: slideRight 1.2s ease-out 0.3s forwards;
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(-100px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideRight {
+  from { transform: translateX(100px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Floating Header -->
+  <div class="floating-header" id="header">
+    <div class="left-info" id="leftInfo">
+     
+      <span>Contact: +91 7737681707 <span class="copy-icon" onclick="copyText('+917737681707')">📋</span></span>
+      <span>E‑mail: architectera.com <span class="copy-icon" onclick="copyText('architectera.com')">📋</span></span>
+    </div>
+    <div class="right-action">
+      <span class="free-badge">Free</span>
+      <a href="https://wa.me/917737681707" target="_blank" class="whatsapp-link">
+        <img src="https://img.icons8.com/ios-filled/50/whatsapp.png" alt="WhatsApp"/>
+       <span class="glow-pulse">Design Your Dream Space – Book Now! 
+  <span class="arrow-icon">→</span>
+</span>
+
+      </a>
+    </div>
+  </div>
+  
+
+  <!-- Navbar – now non-fixed -->
+  <nav class="navbar">
+  <div class="logo">
+    <img src="architect era logo.png" alt="Architects ERA Logo" />
+  </div>
+
+  <div class="nav-toggle" id="navToggle">&#9776;</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#projects" class="active">All Projects</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+    <a href="#blogs">Blogs</a>
+  </div>
+</nav>
+
+<!-- Hero Image Section -->
+ 
+
+  <!-- Page Content -->
+  <div style="padding:20px;">
+    
+  
+    
+    <!-- HERO SECTION START -->
+<section class="hero-full">
+  <h1>Welcome to Architectera</h1>
+  <div class="hero-content">
+    <h1>Say Hello to <span class="highlight">Hassle-Free</span> Construction</h1>
+    <p>Design and Build Your Dream Space with Us</p>
+    <a href="#contact" class="cta-btn">Book Appointment</a>
+  </div>
+  <div class="hero-images-wrapper">
+    <img src="images/Home page/one.jpg" class="hero-img left-slide" alt="Design Left" />
+    <img src="images/Home page/ten.jpg" class="hero-img right-slide" alt="Design Right" />
+  </div>
+</section>
+<div style="height:2000px;"></div>
+
+
+
+    
+    
+  </div>
+  
+
+
+  <script>
+    // Floating header scroll effect
+    const header = document.getElementById('header');
+    let atTop = true;
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 10;
+      if (scrolled && atTop) {
+        header.classList.add('scrolled');
+        atTop = false;
+      } else if (!scrolled && !atTop) {
+        header.classList.remove('scrolled');
+        atTop = true;
+      }
+    });
+
+    // Slide info for small screens
+    const leftInfo = document.getElementById('leftInfo');
+    function setupSlide(){
+      leftInfo.classList.remove('slide');
+      leftInfo.style.setProperty('--slide-width','0px');
+      if(window.innerWidth < 750){
+        const c = leftInfo.offsetWidth;
+        const total = Array.from(leftInfo.children)
+          .reduce((sum, el) => sum + el.offsetWidth + parseInt(getComputedStyle(el).marginRight),0);
+        if(total > c){
+          leftInfo.style.setProperty('--slide-width',(total-c+20)+'px');
+          leftInfo.classList.add('slide');
+        }
+      }
+    }
+    window.addEventListener('load', setupSlide);
+    window.addEventListener('resize', setupSlide);
+
+    // Copy icon handler
+    function copyText(txt){
+      navigator.clipboard.writeText(txt).then(() => alert('Copied: ' + txt));
+    }
+
+    // Navbar active link toggle
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links a.active')?.classList.remove('active');
+        a.classList.add('active');
+      });
+    });
+    // Toggle menu on small screen
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+  </script>
+</body>
+</html>
